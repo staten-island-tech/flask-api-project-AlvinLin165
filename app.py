@@ -1,17 +1,21 @@
-from flask import Flask,
+from flask import Flask, render_template
 import requests
 
 app = Flask(__name__)
 
-@app.route("/")
-def brazilian():
-    cars = []
-    response= requests.get("https://parallelum.com.br/fipe/api/v1/carros/marcas")
-    vehicle = response.json()
-    
+@app.route('/')
+def index():
 
+    url = 'http://ccdb.hemiola.com/characters/radicals/85?filter=gb&fields=kDefinition,kMandarin'
+    print("API Response:", data)  # <--- Add this line
+    response = requests.get(url)
 
-    brazil_car= vehicle['results']
-    for cars in brazil_car:
-        url = cars['url']
-        
+    try:
+        data = response.json()
+    except ValueError:
+        data = []
+
+    return render_template('index.html', data=data)
+
+if __name__ == '__main__':
+    app.run(debug=True)
