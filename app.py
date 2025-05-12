@@ -5,15 +5,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-
     url = 'http://ccdb.hemiola.com/characters/radicals/85?filter=gb&fields=kDefinition,kMandarin'
-    print("API Response:", data)  # <--- Add this line
-    response = requests.get(url)
-
+    data = []
     try:
-        data = response.json()
-    except ValueError:
-        data = []
+        response = requests.get(url)
+        response.raise_for_status()
+        result = response.json()
+        data = result
+        print("API Response:", data)
+    except (requests.RequestException, ValueError) as e:
+        print("Error fetching or parsing data:", e)
 
     return render_template('index.html', data=data)
 

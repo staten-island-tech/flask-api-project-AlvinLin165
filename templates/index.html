@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chinese Characters under Radical 85</title>
+    <title>Chinese Radicals</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Characters under Radical 85</h1>
-    <ul>
-        {% for item in data %}
-            <li>
-                <strong>{{ item.kMandarin }}</strong>: {{ item.kDefinition }}
-            </li>
-        {% else %}
-            <li>No data available</li>
-        {% endfor %}
-    </ul>
+    <h1>Chinese Radicals</h1>
+    {% if data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Mandarin</th>
+                    <th>Definition</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td>{{ item.kMandarin }}</td>
+                        <td>{{ item.kDefinition }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="text-align: center;">No data available.</p>
+    {% endif %}
 </body>
 </html>
