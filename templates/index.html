@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Chinese Radicals</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emoji Browser</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datatables.net-dt/css/jquery.dataTables.min.css">
 </head>
 <body>
-    <h1>Chinese Radicals</h1>
-    {% if data %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Mandarin</th>
-                    <th>Definition</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in data %}
-                    <tr>
-                        <td>{{ item.kMandarin }}</td>
-                        <td>{{ item.kDefinition }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p style="text-align: center;">No data available.</p>
-    {% endif %}
+  <h1>Emoji Browser</h1>
+  <table id="emojiTable">
+    <thead>
+      <tr>
+        <th>Emoji</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Group</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data inserted via JavaScript -->
+    </tbody>
+  </table>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $.getJSON(
+        'https://raw.githubusercontent.com/cheatsnake/emojihub/refs/heads/master/emojistore/data/emojibase.json',
+        function (data) {
+          const tableBody = $('#emojiTable tbody');
+          data.forEach((emoji) => {
+            const row = `
+              <tr>
+                <td class="emoji">${emoji.htmlCode[0]}</td>
+                <td>${emoji.name}</td>
+                <td class="category">${emoji.category}</td>
+                <td class="group">${emoji.group}</td>
+              </tr>`;
+            tableBody.append(row);
+          });
+
+          $('#emojiTable').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true,
+            order: [[1, 'asc']],
+          });
+        }
+      );
+    });
+  </script>
 </body>
 </html>

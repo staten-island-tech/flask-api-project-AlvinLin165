@@ -1,22 +1,21 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 import requests
 
 app = Flask(__name__)
 
-@app.route('/')
+EMOJI_DATA_URL = "https://raw.githubusercontent.com/cheatsnake/emojihub/refs/heads/master/emojistore/data/emojibase.json"
+
+@app.route("/")
 def index():
-    url = 'http://ccdb.hemiola.com/characters/radicals/85?filter=gb&fields=kDefinition,kMandarin'
-    data = []
     try:
-        response = requests.get(url)
-        response.raise_for_status()
-        result = response.json()
-        data = result
-        print("API Response:", data)
-    except (requests.RequestException, ValueError) as e:
-        print("Error fetching or parsing data:", e)
+        response = requests.get(EMOJI_DATA_URL)
+        response.raise_for_status() 
+        emoji_data = response.json()
+    except requests.exceptions.RequestException as e:
+        print("Error fetching emoji data:", e)
+        emoji_data = []
 
-    return render_template('index.html', data=data)
+    return render_template("index.html", emojis=emoji_data)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
