@@ -1,56 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Emoji Browser</title>
+  <meta charset="UTF-8">
+  <title>Emoji Cards</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datatables.net-dt/css/jquery.dataTables.min.css">
 </head>
 <body>
   <h1>Emoji Browser</h1>
-  <table id="emojiTable">
-    <thead>
-      <tr>
-        <th>Emoji</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Group</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Data inserted via JavaScript -->
-    </tbody>
-  </table>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $.getJSON(
-        'https://raw.githubusercontent.com/cheatsnake/emojihub/refs/heads/master/emojistore/data/emojibase.json',
-        function (data) {
-          const tableBody = $('#emojiTable tbody');
-          data.forEach((emoji) => {
-            const row = `
-              <tr>
-                <td class="emoji">${emoji.htmlCode[0]}</td>
-                <td>${emoji.name}</td>
-                <td class="category">${emoji.category}</td>
-                <td class="group">${emoji.group}</td>
-              </tr>`;
-            tableBody.append(row);
-          });
+  <label for="categorySelect">Filter by Category:</label>
+  <select id="categorySelect">
+    <option value="All">All</option>
+    {% for category in categories %}
+      <option value="{{ category }}">{{ category }}</option>
+    {% endfor %}
+  </select>
 
-          $('#emojiTable').DataTable({
-            paging: true,
-            searching: true,
-            ordering: true,
-            order: [[1, 'asc']],
-          });
-        }
-      );
-    });
-  </script>
+  <div id="emojiContainer">
+    {% for emoji in emojis %}
+    <div class="emoji-card" data-category="{{ emoji.category }}">
+      <div class="emoji">{{ emoji.htmlCode[0] | safe }}</div>
+      <div class="emoji-name">{{ emoji.name }}</div>
+      <div class="emoji-category">{{ emoji.category }}</div>
+      <div class="emoji-group">{{ emoji.group }}</div>
+      <button onclick="copyEmoji('{{ emoji.htmlCode[0] }}')">Copy</button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
