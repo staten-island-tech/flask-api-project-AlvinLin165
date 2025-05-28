@@ -19,7 +19,14 @@
       </tr>
     </thead>
     <tbody>
-
+      {% for emoji in emojis %}
+        <tr>
+          <td class="emoji">{{ emoji.htmlCode[0]|safe }}</td>
+          <td>{{ emoji.name }}</td>
+          <td class="category">{{ emoji.category }}</td>
+          <td class="group">{{ emoji.group }}</td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
 
@@ -27,29 +34,12 @@
   <script src="https://cdn.jsdelivr.net/npm/datatables.net/js/jquery.dataTables.min.js"></script>
   <script>
     $(document).ready(function () {
-      $.getJSON(
-        'https://raw.githubusercontent.com/cheatsnake/emojihub/refs/heads/master/emojistore/data/emojibase.json',
-        function (data) {
-          const tableBody = $('#emojiTable tbody');
-          data.forEach((emoji) => {
-            const row = `
-              <tr>
-                <td class="emoji">${emoji.htmlCode[0]}</td>
-                <td>${emoji.name}</td>
-                <td class="category">${emoji.category}</td>
-                <td class="group">${emoji.group}</td>
-              </tr>`;
-            tableBody.append(row);
-          });
-
-          $('#emojiTable').DataTable({
-            paging: true,
-            searching: true,
-            ordering: true,
-            order: [[1, 'asc']],
-          });
-        }
-      );
+      $('#emojiTable').DataTable({
+        paging: true,
+        searching: true,
+        ordering: true,
+        order: [[1, 'asc']]
+      });
     });
   </script>
 </body>

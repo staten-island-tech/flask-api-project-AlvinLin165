@@ -1,0 +1,173 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  background-color: #f5f7fa; /* very light neutral */
+  color: #000000; /* pure black text */
+  line-height: 1.6;
+  padding: 2rem;
+}
+
+/* Header */
+h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: #000000;
+  letter-spacing: 0.05em;
+}
+
+/* Table */
+#emojiTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff; /* crisp white cards */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-weight: 500;
+}
+
+#emojiTable thead {
+  background-color: #a0aecd; /* periwinkle header */
+  color: #000000;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+#emojiTable thead th {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#emojiTable tbody td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 1rem;
+  color: #222222;
+}
+
+#emojiTable tbody tr:hover {
+  background-color: #e3e9f1; /* very light periwinkle hover */
+  cursor: default;
+}
+
+/* Emoji style */
+.emoji {
+  font-size: 1.8rem;
+  text-align: center;
+  user-select: none;
+}
+
+/* Accent badges */
+.category {
+  display: inline-block;
+  background-color: #a0aecd; /* periwinkle badge */
+  color: #ffffff; /* text changed to white */
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: background-color 0.3s ease;
+}
+
+.category:hover {
+  background-color: #8a95b8; /* slightly darker on hover */
+  cursor: pointer;
+}
+
+.group {
+  display: inline-block;
+  background-color: #000000; /* black badge */
+  color: #ffffff;
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: background-color 0.3s ease;
+}
+
+.group:hover {
+  background-color: #333333;
+  cursor: pointer;
+}
+
+/* DataTables overrides */
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid #a0aecd;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  background-color: #a0aecd;
+  color: #000000 !important;
+  border: none;
+  margin: 0 3px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #8a95b8;
+  color: #000000 !important;
+  cursor: pointer;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  #emojiTable thead {
+    display: none;
+  }
+
+  #emojiTable, #emojiTable tbody, #emojiTable tr, #emojiTable td {
+    display: block;
+    width: 100%;
+  }
+
+  #emojiTable tr {
+    margin-bottom: 1rem;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  #emojiTable td {
+    padding: 1rem;
+    text-align: right;
+    position: relative;
+    color: #000000;
+  }
+
+  #emojiTable td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-weight: 700;
+    color: #a0aecd;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.75rem;
+  }
+}
