@@ -17,5 +17,8 @@ def index():
 
     return render_template("index.html", emojis=emoji_data)
 
+@app.route("/emoji/<int:id>")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
